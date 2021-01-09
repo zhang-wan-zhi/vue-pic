@@ -24,6 +24,11 @@ const routes = [
     path: '/yz',
     name: 'Yanzhen',
     component: () => import('../views/Yanzhen.vue')
+  },
+  {
+    path: '/modules',
+    name: 'ElementsIndex',
+    component: () => import('../views/modules/ElementsIndex.vue')
   }
 ]
 

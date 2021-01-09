@@ -10,11 +10,12 @@
         background-color="rgba(242, 244, 248, 0)"
         text-color="#000000"
         active-text-color="#ffd04b"
+        router="true"
       >
-        <el-menu-item index="1">处理中心</el-menu-item>
+        <el-menu-item index="Home" @click="$router.push({ name: 'Home' })">首页</el-menu-item>
         <el-submenu index="2">
           <template slot="title">组件</template>
-          <el-menu-item index="2-1">Element</el-menu-item>
+          <el-menu-item index="ElementsIndex" @click="$router.push({ name: 'ElementsIndex' })">Element</el-menu-item>
           <el-menu-item index="2-2">选项2</el-menu-item>
           <el-menu-item index="2-3">选项3</el-menu-item>
           <el-submenu index="2-4">
@@ -57,11 +58,14 @@ export default {};
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 3000px;
+  background-color: #fee3c3;
 }
 
 .center {
   width: 1000px;
   margin: 0 auto;
+  margin-top: 10px;
 }
 
 .nav {

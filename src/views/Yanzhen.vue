@@ -1,5 +1,5 @@
 <template>
-  <div class="center">
+  <div class="center1">
     <el-form
       :model="ruleForm"
       status-icon
@@ -105,7 +105,7 @@ export default {
 };
 </script>
 <style>
-.center {
+.center1 {
   width: 500px;
   margin: 0 auto;
 }
