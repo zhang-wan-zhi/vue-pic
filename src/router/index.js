@@ -1,39 +1,64 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import Login from "../views/Login.vue";
+import mainNav from "../views/mainNav.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path: "/login",
+    component: Login,
+    name: "Login",
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import('../views/About.vue')
+    path: "/",
+    component: mainNav,
+    name: "mainNav",
+    redirect: "/home",
+    children: [
+      { path: "/home", component: Home, name: "Home" },
+      {
+        path: "/modules",
+        name: "ElementsIndex",
+        component: () => import("../views/modules/ElementsIndex.vue"),
+      },
+      {
+        path: "/yz",
+        name: "Yanzhen",
+        component: () => import("../views/Yanzhen.vue"),
+      },
+      {
+        path: "/detail",
+        name: "Blog",
+        component: () => import("../views/Blog.vue"),
+      },
+      {
+        path: '/detail/:id',
+        component: () => import("../views/Blog.vue"),
+      },
+    ],
   },
   {
-    path: '/ty',
-    name: 'TinyMCE',
-    component: () => import('../views/TinyMCE.vue')
+    path: "/about",
+    name: "About",
+    component: () => import("../views/About.vue"),
   },
   {
-    path: '/yz',
-    name: 'Yanzhen',
-    component: () => import('../views/Yanzhen.vue')
+    path: "/ty",
+    name: "TinyMCE",
+    component: () => import("../views/TinyMCE.vue"),
   },
   {
-    path: '/modules',
-    name: 'ElementsIndex',
-    component: () => import('../views/modules/ElementsIndex.vue')
-  }
-]
+    path: "/edit",
+    name: "articleEdit",
+    component: () => import("../views/admin/articleEdit.vue"),
+  },
+];
 
 const router = new VueRouter({
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

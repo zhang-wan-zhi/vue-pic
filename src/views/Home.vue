@@ -1,29 +1,27 @@
 <template>
   <div class="home">
-    <el-row :gutter="12">
-      <el-col :span="12">
-        <el-carousel indicator-position="outside">
-          <el-carousel-item v-for="item in imgList" :key="item.id">
-            <img
-              ref="imgHeight"
-              :src="item.idView"
-              class="image"
-              @load="imgLoad"
-            />
-          </el-carousel-item>
-        </el-carousel>
-      </el-col>
-      <el-col :span="6">
-        <el-card shadow="hover">
-          鼠标悬浮时显示
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card shadow="never">
-          从不显示
-        </el-card>
-      </el-col>
-    </el-row>
+    <el-card class="box-card">
+      <div v-for="item in blogList" :key="item._id" class="item">
+          <router-link :to="'/detail/' + item._id">
+            <div class="item-main">
+              <el-image
+                style="width: 100%; height: 100%"
+                :src="item.pic"
+              ></el-image>
+              <h1>{{ item.title }}</h1>
+            </div>
+          </router-link>
+        
+        <div class="item-tags">
+          <span class="tag-time"
+            ><i class="el-icon-s-cooperation" style="margin-right:5px"></i
+            >{{ item.date }}</span
+          >
+          <span>{{ item.classify }}</span>
+        </div>
+        <p>{{ item.gist }}</p>
+      </div>
+    </el-card>
   </div>
 </template>
 
@@ -34,56 +32,74 @@ export default {
   name: "Home",
   data() {
     return {
-      imgList: [
-        { id: 0, idView: require("../../status/image/1.jpg") },
-        { id: 1, name: "详情", idView: require("../../status/image/2.jpg") },
-        { id: 2, name: "推荐", idView: require("../../status/image/1.jpg") },
-        { id: 3, idView: require("../../status/image/4.jpg") },
-      ],
-      screenWidth :0
+      blogList: [],
     };
   },
   components: {},
-  methods: {
-    setSize: function() {
-      // 通过浏览器宽度(图片宽度)计算高度
-      this.bannerHeight = (400 / 1920) * this.screenWidth;
-    },
-  },
+  methods: {},
   mounted() {
-    // 首次加载时,需要调用一次
-    this.screenWidth = window.innerWidth;
-    this.setSize();
-    // 窗口大小发生改变时,调用一次
-    window.onresize = () => {
-      this.screenWidth = window.innerWidth;
-      this.setSize();
-    };
+    //获取首页文章列表
+    this.$http({
+      method: "post",
+      url: "articleList",
+    }).then((e) => {
+      this.blogList = e.data;
+      console.log("bloglist", this.blogList);
+      console.log(e);
+    });
   },
 };
 </script>
 
 <style>
-
-.el-col {
-  border-radius: 4px;
-}
-.bg-purple-dark {
-  background: #99a9bf;
-}
-.bg-purple {
-  background: #d3dce6;
-}
-.bg-purple-light {
-  background: #e5e9f2;
-}
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-.image {
-  /*设置图片宽度和浏览器宽度一致*/
+.home {
+  height: 100%;
   width: 100%;
-  height: inherit;
+}
+.item {
+  margin-bottom: 40px;
+}
+.item-main {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  min-height: 95px;
+  background-color: #eee;
+}
+.item-main h1 {
+  color: #fff;
+  font-size: 2.5em;
+  font-weight: 400;
+  margin: 0;
+  margin-top: 10px;
+  padding-left: 1px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  text-transform: none;
+  z-index: 1;
+  padding: 25px;
+  text-align: left;
+}
+.item .item-tags {
+  display: flex;
+  justify-content: start;
+  margin-top: 10px;
+}
+.item .item-tags span {
+  width: 150px;
+  height: 36px;
+  border-radius: 20px;
+  background: yellow;
+  margin-right: 20px;
+  text-align: center;
+  line-height: 36px;
+  overflow: hidden;
+}
+.item p {
+  text-align: start;
+  margin: 15px 0;
 }
 </style>
