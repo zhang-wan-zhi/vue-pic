@@ -9,22 +9,34 @@ import mavonEditor from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
 
 
-axios.defaults.baseURL = "http://localhost:8081/api/";
+
+
+
+
+
+
+axios.defaults.baseURL = "http://121.196.153.34:8088/api/";
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.prototype.$http = axios;
 Vue.use(Vuex);
-Vue.use(mavonEditor)
+Vue.use(mavonEditor);
+
+
 
 const store = new Vuex.Store({
   state: {
-    count: 0,
+    lists: [],
+    isSignIn: 0,//0未登录，1admin，2游客
   },
   mutations: {
-    increment(state) {
-      state.count++;
+    increment(state , n) {
+      state.lists = n;
     },
+    changeIsSignIn(state, n) {
+      state.isSignIn = n
+    }
   },
 });
 

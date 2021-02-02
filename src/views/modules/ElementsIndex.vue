@@ -1,63 +1,129 @@
 <template>
-  <el-row :gutter="20">
-    <el-col :span="6"
-      ><div>
-        <el-card :body-style="{ padding: '0px' }" shadow="hover">
-          <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-            class="image"
-          />
-          <div style="padding: 14px;">
-            <span>手机验证码校验</span>
-            <div class="bottom clearfix">
-              <el-button type="text" class="button" @click="goYanzhen">查看</el-button>
-            </div>
-          </div>
-        </el-card>
-      </div></el-col
-    >
-    <el-col :span="6"><div></div></el-col>
-    <el-col :span="6"><div></div></el-col>
-    <el-col :span="6"><div></div></el-col>
-  </el-row>
+  <div class="page">
+    <div class="wrapper-ele">
+      <div class="card" v-for="item in items" :key="item.id">
+        <img class="pic" :src="item.pic" />
+        <div class="text">
+          <p class="title">{{ item.title }}</p>
+          <p class="gist">{{ item.gist }}</p>
+          <a class="view" :href="item.file" target="_blank"></a>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+
 export default {
   data() {
     return {
-
-    }
+      items: [],
+    };
   },
-  methods: {
-    goYanzhen() {
-      this.$router.push('/yz')
-    }
+  methods: {},
+  created() {
+    this.$http({
+      method: "post",
+      url: "demoList",
+    }).then((res) => {
+      this.items = res.data;
+    });
+  },
+  components: {
   }
 };
 </script>
 
-<style>
-.button {
-  padding: 0;
-  float: right;
-}
-.image {
-  width: 100%;
-  display: block;
-}
+<style lang="scss" scoped>
 
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
+.wrapper-ele {
+  display: flex;
+  flex-wrap:wrap;
+  justify-content: flex-start
 }
-
-.clearfix:after {
-  clear: both;
-}
-.bottom {
-  margin-top: 13px;
-  line-height: 12px;
+.card {
+  width: 200px;
+  height: 200px;
+  border-radius: 5px;
+  margin: 10px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #000 0%, #fff 100%);
+  .pic {
+    width: 390px;
+    height: 310px;
+    transition: all 0.3s;
+    opacity: 0.9;
+  }
+  .text {
+    color: #fff;
+    padding: 30px;
+    transition: all 0.3s;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    &::before {
+      position: absolute;
+      right: -68px;
+      bottom: -82px;
+      width: 250px;
+      height: 250px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 0 900px rgba(255, 255, 255, 0.2);
+      content: "";
+      opacity: 0;
+      transition: all 0.3s;
+      transform: scale3d(0.5, 0.5, 1);
+      transform-origin: 50% 50%;
+    }
+    .title {
+      font-size: 28px;
+      transition: all 0.3s;
+    }
+    .gist {
+      position: absolute;
+      right: -8px;
+      bottom: 8px;
+      padding: 0 1.5em 1.5em 0;
+      width: 140px;
+      text-align: right;
+      opacity: 0;
+      transform: translate3d(20px, 20px, 0);
+      transition: all 0.3s;
+    }
+    .view {
+      padding: 30px;
+      transition: all 0.3s;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+  }
+  &:hover {
+    .text::before {
+      opacity: 1;
+      transform: scale3d(1, 1, 1);
+    }
+    .pic {
+      opacity: 0.6;
+      transform: translate3d(-10px, -10px, 0);
+    }
+    .text {
+      transform: translate3d(-10px, -10px, 0);
+    }
+    .title {
+      transform: translate3d(5px, 5px, 0);
+    }
+    .gist {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
 }
 </style>

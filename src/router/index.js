@@ -27,7 +27,12 @@ const routes = [
       {
         path: "/yz",
         name: "Yanzhen",
-        component: () => import("../views/Yanzhen.vue"),
+        component: () => import("../views/modules/Yanzhen.vue"),
+      },
+      {
+        path: "/wave",
+        name: "Wave",
+        component: () => import("../components/wave.vue"),
       },
       {
         path: "/detail",
@@ -38,24 +43,30 @@ const routes = [
         path: '/detail/:id',
         component: () => import("../views/Blog.vue"),
       },
+      {
+        path: '/home/subtotal',
+        component: () => import("../views/Subtotal.vue"),
+      },
+      {
+        path: '/aboutme',
+        component: () => import("../views/Aboutme.vue"),
+      },
     ],
   },
   {
     path: "/about",
     name: "About",
-    component: () => import("../views/About.vue"),
-  },
-  {
-    path: "/ty",
-    name: "TinyMCE",
-    component: () => import("../views/TinyMCE.vue"),
+    component: () => import("../views/modules/About.vue"),
   },
   {
     path: "/edit",
     name: "articleEdit",
     component: () => import("../views/admin/articleEdit.vue"),
   },
+  
 ];
+
+
 
 const router = new VueRouter({
   routes,
